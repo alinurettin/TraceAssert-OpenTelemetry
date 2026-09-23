@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TraceAssert-OpenTelemetry - Trace-Driven Testing</title>
+  <style>
+    body { background: #0b0f19; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 24px; }
+    .card { background: #151d30; border: 1px solid #233252; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    h1 { color: #38bdf8; margin: 0 0 10px 0; font-size: 24px; }
+    .badge { background: #0284c7; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-right: 8px; }
+    button { background: #0284c7; border: none; color: white; padding: 10px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    pre { background: #070b14; border: 1px solid #1e293b; padding: 16px; border-radius: 6px; color: #a5f3fc; overflow-x: auto; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px; }
+    .stat-box { background: #0f172a; padding: 12px; border-radius: 6px; border: 1px solid #1e293b; text-align: center; }
+    .stat-val { font-size: 20px; font-weight: bold; color: #38bdf8; }
+    .stat-lbl { font-size: 11px; color: #94a3b8; text-transform: uppercase; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🛰️ TraceAssert-OpenTelemetry</h1>
+    <p><span class="badge">Trace-Driven Testing</span> <span class="badge">OpenTelemetry</span> <span class="badge">Port 7074</span></p>
+    <p>Trace-Driven Testing & Distributed Observability Assertion Engine for Microservices.</p>
+    <button onclick="runTraceDemo()">⚡ Verify Distributed OpenTelemetry Trace</button>
+  </div>
+  <div class="card">
+    <h3>📊 Distributed Trace DAG Assertions</h3>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-val" id="stat-status">IDLE</div><div class="stat-lbl">Trace Verdict</div></div>
+      <div class="stat-box"><div class="stat-val" id="stat-duration">0ms</div><div class="stat-lbl">Trace Latency</div></div>
+      <div class="stat-box"><div class="stat-val" id="stat-spans">0</div><div class="stat-lbl">Spans Evaluated</div></div>
+      <div class="stat-box"><div class="stat-val" id="stat-fails">0</div><div class="stat-lbl">Failed Checks</div></div>
+    </div>
+    <pre id="output">Click 'Verify Distributed OpenTelemetry Trace' to evaluate OTel trace spans...</pre>
+  </div>
+  <script>
+    async function runTraceDemo() {
+      document.getElementById('output').textContent = 'Ingesting OpenTelemetry spans and asserting causality DAG...';
+      const res = await fetch('/api/trace', { method: 'POST' });
+      const data = await res.json();
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      document.getElementById('stat-status').textContent = data.status;
+      document.getElementById('stat-duration').textContent = data.totalDurationMs + 'ms';
+      document.getElementById('stat-spans').textContent = data.totalSpans;
+      document.getElementById('stat-fails').textContent = data.failedChecksCount;
+    }
+  </script>
+</body>
+</html>

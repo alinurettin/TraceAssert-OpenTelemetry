@@ -1,0 +1,15 @@
+{
+  "name": "traceassert-opentelemetry",
+  "version": "1.0.0",
+  "description": "Trace-driven testing engine for distributed microservice architectures. Ingests OpenTelemetry (OTel) traces and spans, reconstructs causal Directed Acyclic Graphs (DAGs), asserts latency budgets, verifies asynchronous event propagation, and flags unhandled error spans.",
+  "main": "src/index.js",
+  "bin": {
+    "trace-assert": "src/cli.js"
+  },
+  "scripts": {
+    "test": "node tests/run_tests.js",
+    "start": "node src/index.js"
+  },
+  "author": "Ali Nurettin Demir (@alinurettin)",
+  "license": "MIT"
+}

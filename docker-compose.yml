@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  traceassert-opentelemetry:
+    build: .
+    ports:
+      - "7074:7074"
+    environment:
+      - PORT=7074
